@@ -138,9 +138,6 @@ class CourseMode(models.Model):
     DEFAULT_SHOPPINGCART_MODE_SLUG = HONOR
     DEFAULT_SHOPPINGCART_MODE = Mode(HONOR, _('Honor'), 0, '', 'usd', None, None, None, None)
 
-    class Meta(object):
-        unique_together = ('course_id', 'mode_slug', 'currency')
-
     def clean(self):
         """
         Object-level validation - implemented in this method so DRF serializers
@@ -657,6 +654,7 @@ class CourseModesArchive(models.Model):
     """
     class Meta(object):
         app_label = "course_modes"
+        unique_together = ('course_id', 'mode_slug', 'currency')
 
     # the course that this mode is attached to
     course_id = CourseKeyField(max_length=255, db_index=True)
